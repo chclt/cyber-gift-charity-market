@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { toPng  } from 'html-to-image'
 
 import './App.css'
 
@@ -144,12 +145,15 @@ function App() {
         const ctx = canvas.current.getContext("2d");
         if (!ctx) return;
 
-        ctx.font = "24px 'Noto Serif SC'";
+        ctx.font = "24px 'LinhaiLishu'";
         ctx.fillStyle = "#eaab0c";
+        ctx.textAlign = "left";
         ctx?.fillTextVertical(`${sender}`, 300, 80);
-        ctx?.fillTextVertical(`${receiver}`, 220, 80);
 
-        ctx.font = "48px 'Noto Serif SC'";
+        ctx.textAlign = "right";
+        ctx?.fillTextVertical(`${receiver}`, 100, 350);
+
+        ctx.font = "48px 'LinhaiLishu'";
 
         ctx?.fillTextVertical(`${text1}`, 140, 100);
         ctx?.fillTextVertical(`${text2}`, 60, 100);
@@ -205,10 +209,24 @@ function App() {
                 </div>
             </form>
 
-            <span></span>
+            <span style={{
+                fontFamily: "LinhaiLishu", 
+                fontWeight: 600,
+            }}>
+
+                临海隶书
+            </span>
+
+            <span style={{
+                fontFamily: "AoyagiReisyosimo", 
+                fontWeight: 600,
+            }}>
+
+                另一个隶书
+            </span>
 
             <canvas ref={canvas} style={{
-                fontFamily: "'Noto Serif SC', serif", 
+                fontFamily: "'LinhaiLishu', serif", 
                 fontWeight: 600,
             }}></canvas>
 
