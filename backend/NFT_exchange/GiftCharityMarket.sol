@@ -26,7 +26,7 @@ contract GiftCharityMarket is ReentrancyGuard {
     event NFTSent(
         address indexed nftContract,
         uint256 indexed tokenId,
-        address indexed sender,
+        address sender,
         address indexed recipient,
         uint256 price,
         uint256 sentTime
@@ -82,7 +82,7 @@ contract GiftCharityMarket is ReentrancyGuard {
             "Payment failed"
         );
 
-        require(nft.isApprovedForAll(msg.sender, address(this)));
+        require(nft.isApprovedForAll(msg.sender, address(this)), "not approved");
         nft.safeTransferFrom(msg.sender, _recipient, _tokenId);
 
         uint256 sentTime = block.timestamp;
