@@ -28,7 +28,7 @@ export function Sidebar({ className }: SidebarProps) {
             }} >
               <Button variant={location.pathname == "/" ? "secondary" : "ghost"} className="w-full justify-start">
                 <span className="mr-2 text-lg">🚩</span>
-                 送锦旗
+                 送礼物
               </Button>
             </Link>
 
@@ -46,7 +46,7 @@ export function Sidebar({ className }: SidebarProps) {
             }} >
               <Button variant={location.pathname == "my" ? "secondary" : "ghost"} className="w-full justify-start">
                 <span className="mr-2 text-lg">🎁</span>
-                 我收到的锦旗
+                 我收到的
               </Button>
             </Link>
           </div>

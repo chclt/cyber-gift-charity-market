@@ -6,7 +6,7 @@ export function Model({ src }: { src: string }) {
     const { scene } = useGLTF(src);
 
     return (
-        <Canvas camera={{ position: [-10, 15, 15], fov: 50 }}>
+        <Canvas camera={{ position: [-5, 8, 8], fov: 30 }}>
             <ambientLight intensity={1} />
             <Suspense fallback={null}>
                 <primitive object={scene} />;

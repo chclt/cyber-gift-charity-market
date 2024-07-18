@@ -28,9 +28,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <QueryClientProvider client={queryClient}>
             <RainbowKitProvider>
               <div className="bg-background">
-                <div className="grid grid-cols-4 lg:grid-cols-5">
-                  <Sidebar />
-                  <div className="col-span-3 lg:col-span-4 lg:border-l">
+                <div className="max-w-screen-lg mx-auto px-16 grid grid-cols-5">
+                  <Sidebar className="col-span-2" />
+                  <div className="col-span-3">
                     {children}
                   </div>
                 </div>

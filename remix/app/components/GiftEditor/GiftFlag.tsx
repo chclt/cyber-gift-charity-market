@@ -13,13 +13,17 @@ import { wagmiConfig } from "~/config/wagmi-config";
 import { waitForTransactionReceipt } from "@wagmi/core"
 import { marketContractAbi, marketContractAddress } from "~/config/market-contract";
 import { paymentTokenContractAbi, paymentTokenContractAddress } from "~/config/payment-token-contract";
+import { ReloadIcon } from "@radix-ui/react-icons";
+import QRCodeCanvas from 'qrcode.react';
+
+
 
 
 export function GiftFlag() {
     const { address: useAddress } = useAccount();
 
 
-
+    const [fileUrl, setFileUrl] = useState<string>("");
 
 
     const canvas = useRef<HTMLDivElement>();
@@ -46,6 +50,7 @@ export function GiftFlag() {
         if (!canvas.current) return;
 
         setIsSubmitting(true);
+        setFileUrl("");
         
         toBlob(canvas.current)
         .then((blob) => {
@@ -59,6 +64,8 @@ export function GiftFlag() {
         .then(async (ipfsUrl) => {
             if (!ipfsUrl) return;
             // return sendGift("senderAdd", address, ipfsUrl);
+
+            setFileUrl(ipfsUrl);
 
             const mintTx = await mintNFT({
                 abi: nftAbi,
@@ -168,7 +175,7 @@ export function GiftFlag() {
                         ].map(({label, value}) => (
                             <div key={value} className="flex flex-col">
                                 <label>
-                                    <h4 className="text-sm">{label}</h4>
+                                    <h4 className="text-sm mb-2">{label}</h4>
                                     <Input name={value} />
                                 </label>
                             </div>
@@ -179,7 +186,7 @@ export function GiftFlag() {
 
                     <div className="col-span-2 flex flex-col">
                         <label>
-                            <h4 className="text-sm">对方的地址</h4>
+                            <h4 className="text-sm mb-2">对方的地址</h4>
                             <Input name="address" />
                         </label>
                     </div>
@@ -187,10 +194,18 @@ export function GiftFlag() {
                     <Button
                         disabled={isSubmitting}
                         type="submit"
-                    >赠送锦旗</Button>
+                        className="col-span-2 mt-2"
+                    >
+                        { isSubmitting && <ReloadIcon className="mr-2 animate-spin" />}
+                        赠送锦旗
+                    </Button>
+
+
 
                 </div>
             </form>
+
+            { fileUrl && <QRCodeCanvas className="mt-4" value={fileUrl} />}
 
             <div ref={canvas} className="" style={{
                 width: "375px"
@@ -214,7 +229,6 @@ export function GiftFlag() {
                 </div>
             </div>
 
-    
         </div>
     )
 }

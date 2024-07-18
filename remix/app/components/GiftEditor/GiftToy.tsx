@@ -22,6 +22,9 @@ import { Canvas, useLoader } from '@react-three/fiber'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { Model } from "../Model";
 import { ClientOnly } from "remix-utils/client-only";
+import { ReloadIcon } from "@radix-ui/react-icons";
+
+import QRCodeCanvas from 'qrcode.react';
 
 
 
@@ -32,7 +35,7 @@ export function GiftToy() {
 
 
 
-    const [userPrompt, setUserPrompt] = useState<string>("Very very very very very BIG.");
+    const [userPrompt, setUserPrompt] = useState<string>("红色高跟鞋");
 
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const [isSubmittingGift, setIsSubmittingGift] = useState<boolean>(false);
@@ -57,10 +60,13 @@ export function GiftToy() {
     const [imageUrl, setImageUrl] = useState<string | null>(null);
     const [modelUrl, setModelUrl] = useState<string | null>(null);
 
-    const loader = useRef(new GLTFLoader());
+    
+    const [fileUrl, setFileUrl] = useState<string>("");
 
     const handleSubmit = () => {
         if (!userPrompt) return;
+        setFileUrl("");
+
 
         setIsSubmitting(true);
          
@@ -102,17 +108,17 @@ export function GiftToy() {
                 const json = await res.json();
                 const data = json.data;
                 if (data.status === "completed" || data.status === "success") {
-                    setTaskStatus("任务完成");
+                    setTaskStatus("");
                     loopFlag = false;
                     setGiftResult(data);
                     apiResult = data;
                 } else if (data.status === "failed") {
-                    setTaskStatus("任务失败");
+                    setTaskStatus(" (失败)");
                     loopFlag = false;
                     setGiftResult(data);
                     apiResult = data;
                 } else {
-                    data.progress ? setTaskStatus("任务进行中" + data.progress) : setTaskStatus("任务进行中");
+                    data.progress ? setTaskStatus(" (" + data.progress + "%)") : setTaskStatus(" (...)");
                 }
 
             }
@@ -153,7 +159,9 @@ export function GiftToy() {
         })
         
         .finally(() => {
-            setIsSubmitting(false);
+            setTimeout(() => {
+                setIsSubmitting(false);
+            }, 1000); // 等到模型加载完。。。
         })
 
     }
@@ -167,6 +175,8 @@ export function GiftToy() {
         .then(async (ipfsUrl) => {
             if (!ipfsUrl) return;
             // return sendGift("senderAdd", address, ipfsUrl);
+
+            setFileUrl(ipfsUrl);
 
             const mintTx = await mintNFT({
                 abi: nftAbi,
@@ -226,21 +236,38 @@ export function GiftToy() {
 
     return (
         <div className="flex flex-col">
-            <Textarea onChange={(e) => setUserPrompt(e.target.value)}>{userPrompt}</Textarea>
-            <Button disabled={isSubmitting} onClick={() => {handleSubmit()}}>生成小玩具</Button>
-            <p>{taskStatus}</p>
-            <p>{giftResult?.output?.model}</p>
-            <p>{giftResult?.output?.rendered_image}</p>
+            <Textarea onChange={(e) => setUserPrompt(e.target.value)} className="min-h-24">{userPrompt}</Textarea>
+            <Button 
+                disabled={isSubmitting} 
+                onClick={() => {handleSubmit()}} 
+                className="mt-4"
+            >
+                { isSubmitting && <ReloadIcon className="mr-2 animate-spin" />}
+                生成小玩具{taskStatus}
+            </Button>
 
-            {modelUrl && <Model src={modelUrl} />}
+            { fileUrl && <QRCodeCanvas className="mt-4" value={fileUrl} />}
 
-            <div className="col-span-2 flex flex-col">
+            { modelUrl && 
+                <div className="mt-4 rounded-md border border-input bg-transparent">
+                        <Model src={modelUrl} />
+                </div>
+            }
+
+            <div className="mt-8">
                 <label>
-                    <h4 className="text-sm">对方的地址</h4>
+                    <h4 className="text-sm mb-2">对方的地址</h4>
                     <Input name="address" onChange={e=>setAddress(e.target.value)} />
                 </label>
             </div>
-            <Button disabled={isSubmittingGift} onClick={() => {handleSubmitGift()}}>确认赠送</Button>
+            <Button 
+                disabled={isSubmittingGift} 
+                onClick={() => {handleSubmitGift()}} 
+                className="mt-4"
+            >
+                { isSubmittingGift && <ReloadIcon className="mr-2 animate-spin" />}
+                确认赠送
+            </Button>
 
     
         </div>
