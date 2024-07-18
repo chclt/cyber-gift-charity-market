@@ -29,9 +29,9 @@ const NFTAddingDialog: React.FC<NFTAddingDialogProps> = ({ onAdd }: NFTAddingDia
                     </DialogHeader>
 
                     <Form onSubmit={handleOnSubmit}>
-                        <Input name="nftContract" placeholder="NFT Contract" required defaultValue={nftContractAddress}></Input>
-                        <Input name="tokenId" placeholder="NFT TokenID" required></Input>
-                        <Input name="price" placeholder="NFT Price" required></Input>
+                        <Input name="nftContract" placeholder="NFT 合约地址" required defaultValue={nftContractAddress}></Input>
+                        <Input name="tokenId" placeholder="NFT ID" required></Input>
+                        <Input name="price" placeholder="NFT 价格" required></Input>
                         <button type="submit">上架 📣</button>
                     </Form>
                 </Dialog>
@@ -83,7 +83,7 @@ const Dialog = styled.div`
     right: 20px;
     bottom: 20px;
     z-index: 1000;
-    width: 200px;
+    width: 250px;
     padding: 20px;
     background-color: white;
     border-radius: 10px;

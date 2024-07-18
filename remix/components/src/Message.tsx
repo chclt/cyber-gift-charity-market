@@ -32,7 +32,7 @@ const MsgNotification = styled.div`
     left: 50%;
     transform: translateX(-50%);
     padding: 4px 40px;
-    height: 2em;
+    height: 50px;
     line-height: 2em;
     border-radius: 10px;
     text-align: center;
