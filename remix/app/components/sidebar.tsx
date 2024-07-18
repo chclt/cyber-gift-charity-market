@@ -19,28 +19,16 @@ export function Sidebar({ className }: SidebarProps) {
     <div className={cn("pb-12", className)}>
       <div className="space-y-4 py-4">
         <div className="px-3 py-2">
-          <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
-            Gifts
+          <h2 className="mb-4 px-4 text-[3rem] font-semibold tracking-tight">
+            🚩
           </h2>
           <div className="space-y-1">
             <Link to={{
               pathname: "/",
             }} >
               <Button variant={location.pathname == "/" ? "secondary" : "ghost"} className="w-full justify-start">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="mr-2 h-4 w-4"
-                >
-                  <circle cx="12" cy="12" r="10" />
-                  <polygon points="10 8 16 12 10 16 10 8" />
-                </svg>
-                送礼物
+                <span className="mr-2 text-lg">🚩</span>
+                 送锦旗
               </Button>
             </Link>
 
@@ -48,22 +36,8 @@ export function Sidebar({ className }: SidebarProps) {
               pathname: "/market",
             }} >
               <Button variant={location.pathname == "/market" ? "secondary" : "ghost"} className="w-full justify-start">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="mr-2 h-4 w-4"
-                >
-                  <rect width="7" height="7" x="3" y="3" rx="1" />
-                  <rect width="7" height="7" x="14" y="3" rx="1" />
-                  <rect width="7" height="7" x="14" y="14" rx="1" />
-                  <rect width="7" height="7" x="3" y="14" rx="1" />
-                </svg>
-                Market
+                <span className="mr-2 text-lg">🛒</span>
+                 市场
               </Button>
             </Link>
 
@@ -71,27 +45,12 @@ export function Sidebar({ className }: SidebarProps) {
               pathname: "/my",
             }} >
               <Button variant={location.pathname == "my" ? "secondary" : "ghost"} className="w-full justify-start">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="mr-2 h-4 w-4"
-                >
-                  <path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9" />
-                  <path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5" />
-                  <circle cx="12" cy="12" r="2" />
-                  <path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5" />
-                  <path d="M19.1 4.9C23 8.8 23 15.1 19.1 19" />
-                </svg>
-                My
+                <span className="mr-2 text-lg">🎁</span>
+                 我收到的锦旗
               </Button>
             </Link>
           </div>
-          <p>公益账户余额: {formatUnits(balance, paymentTokenDecimal)}</p>
+          <p className="my-4 px-4"><span className="mr-2 text-lg">💖</span>公益账户: {formatUnits(balance, paymentTokenDecimal)}</p>
           <ConnectButton></ConnectButton>
         </div>
       </div>

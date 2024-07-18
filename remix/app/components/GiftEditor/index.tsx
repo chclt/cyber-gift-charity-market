@@ -13,17 +13,13 @@ import {
 export function GiftEditor () {
 
     return (
-        <Tabs defaultValue="flag" className="w-[400px]">
-            <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="flag">锦旗</TabsTrigger>
-                <TabsTrigger value="card">贺卡</TabsTrigger>
-            </TabsList>
-            <TabsContent value="flag">
+        // <Tabs defaultValue="flag" className="w-[400px]">
+        //     <TabsList className="grid w-full grid-cols-2">
+        //         <TabsTrigger value="flag">锦旗</TabsTrigger>
+        //     </TabsList>
+        //     <TabsContent value="flag">
                 <GiftFlag />
-            </TabsContent>
-            <TabsContent value="card">
-                Null
-            </TabsContent>
-        </Tabs>
+            // </TabsContent>
+        // </Tabs>
     )
 }
