@@ -1,10 +1,11 @@
 export interface INFTItem {
     nftContract: string;
     tokenId: bigint;
-    seller: string;
-    price: bigint;
     addTime: bigint;
-    isActive: boolean;
+    sender?: string;
+    seller?: string;
+    price?: bigint;
+    isActive?: boolean;
 }
 
 export interface IAddNFTParams {

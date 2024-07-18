@@ -6,11 +6,11 @@ import { styled } from 'styled-components';
 
 interface NFTListProps {
     nftItems: INFTItem[];
-    onBuy: (item: INFTItem) => void;
-    onRemove: (item: INFTItem) => void;
+    onBuy?: (item: INFTItem) => void;
+    onRemove?: (item: INFTItem) => void;
 }
 
-const NFTList: React.FC<NFTListProps> = ({ nftItems, onBuy, onRemove }: NFTListProps) => {
+const NFTList: React.FC<NFTListProps> = ({ nftItems, onBuy = () => {}, onRemove = () => {} }: NFTListProps) => {
     return (
         <List>
             {!!nftItems.length && nftItems.map((item: INFTItem, index: number) =>

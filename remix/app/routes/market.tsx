@@ -4,7 +4,7 @@ import NFTAddingDialog from '~/components/NFTAddingDialog';
 import NFTList from '~/components/NFTList';
 import Message, { useMessage } from '~/components/Message';
 import LoadingOverlay from '~/components/LoadingOverlay';
-import { useFetchNFTList } from '../hooks/useFetchNFTList';
+import { useFetchSellingNFTList } from '../hooks/useFetchSellingNFTList';
 import { useBuyNFTItem } from '../hooks/useBuyNFTItem';
 import { useAddNFTToMarket } from '../hooks/useAddNFTToMarket';
 import { useRemoveNFTFromMarket } from '../hooks/useRemoveNFTFromMarket';
@@ -13,7 +13,7 @@ import { ClientOnly } from "remix-utils/client-only";
 const Market: React.FC = () => {
     const { showMessage, msgToggle, msg } = useMessage();
 
-    const { nftItems, isListFetching, delayRefresh } = useFetchNFTList();
+    const { nftItems, isListFetching, delayRefresh } = useFetchSellingNFTList();
 
     const { isAddPending, isAddLoading, addNFTToMarket } = useAddNFTToMarket();
     const handleOnAdd = (nftContract: string, tokenId: string, price: string, onEnd: () => void) => {
