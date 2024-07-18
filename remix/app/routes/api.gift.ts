@@ -1,6 +1,7 @@
 import type { LoaderFunction, ActionFunction } from "@remix-run/node";
 
 export const loader: LoaderFunction = async ({ context, request, params }) => {
+    return null;
 };
 
 export const action = async ({
@@ -9,7 +10,7 @@ export const action = async ({
 
     switch (request.method) { 
         case "POST": {
-            break;
+            return null;
         }
     }
 };

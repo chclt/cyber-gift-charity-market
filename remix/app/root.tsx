@@ -7,6 +7,12 @@ import {
 } from "@remix-run/react";
 import "./tailwind.css";
 import { Sidebar } from "./components/sidebar";
+import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { WagmiProvider } from "wagmi";
+import { wagmiConfig } from "./config/wagmi-config";
+
+const queryClient = new QueryClient();
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -18,14 +24,20 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <div className="bg-background">
-          <div className="grid grid-cols-4 lg:grid-cols-5">
-            <Sidebar />
-            <div className="col-span-3 lg:col-span-4 lg:border-l">
-              {children}
-            </div>
-          </div>
-        </div>
+        <WagmiProvider config={wagmiConfig}>
+          <QueryClientProvider client={queryClient}>
+            <RainbowKitProvider>
+              <div className="bg-background">
+                <div className="grid grid-cols-4 lg:grid-cols-5">
+                  <Sidebar />
+                  <div className="col-span-3 lg:col-span-4 lg:border-l">
+                    {children}
+                  </div>
+                </div>
+              </div>
+            </RainbowKitProvider>
+          </QueryClientProvider>
+        </WagmiProvider>
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -34,5 +46,5 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return <Outlet></Outlet>
 }

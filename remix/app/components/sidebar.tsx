@@ -1,6 +1,7 @@
 import { cn } from "~/lib/utils"
 import { Button } from "~/components/ui/button"
-
+import { ConnectButton } from "@rainbow-me/rainbowkit"
+import 'node_modules/@rainbow-me/rainbowkit/dist/index.css';
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
   
@@ -69,8 +70,8 @@ export function Sidebar({ className }: SidebarProps) {
               My
             </Button>
           </div>
+          <ConnectButton></ConnectButton>
         </div>
-
       </div>
     </div>
   )
