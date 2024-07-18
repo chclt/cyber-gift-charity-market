@@ -16,11 +16,12 @@ import { toBlob, toPng } from "html-to-image";
 import "./GiftFlag.css";
 import { useRef, useState } from "react";
 
-interface GiftFlagProps extends React.HTMLAttributes<HTMLDivElement> {
-    onFinish: (file: File) => void;
-}
+import { createGift } from "~/lib/common";
 
-export function  GiftFlag({onFinish}: GiftFlagProps) {
+
+export function GiftFlag() {
+
+
 
     const canvas = useRef<HTMLDivElement>();
 
@@ -28,13 +29,27 @@ export function  GiftFlag({onFinish}: GiftFlagProps) {
     const [receiver, setReceiver] = useState("");
     const [text, setText] = useState("");
 
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-    const handleGenImage = () => {
+    const handleSubmit = () => {
         if (!canvas.current) return;
-        toBlob(canvas.current).then((blob) => {
-            blob && onFinish(new File([blob], "flag.png", {type: "image/png"}));
+
+        setIsSubmitting(true);
+        
+        toBlob(canvas.current)
+        .then((blob) => {
+            return blob ? new File([blob], "flag.png", {type: "image/png"}) : undefined;
         })
+        .then((file) => {
+            if (!file) return;
+            return createGift(file);
+        })
+        .finally(() => {
+            setIsSubmitting(false);
+        })
+
     }
+
 
     return (
         <div className="flex flex-col">
@@ -54,7 +69,7 @@ export function  GiftFlag({onFinish}: GiftFlagProps) {
                 }}
                 onSubmit={(e) => {
                     e.preventDefault();
-                    handleGenImage();
+                    handleSubmit();
                 }}
                 >
                 <div className="grid grid-cols-2 gap-4">
@@ -69,7 +84,10 @@ export function  GiftFlag({onFinish}: GiftFlagProps) {
                         ))
                     }
 
-                    <Button type="submit">Submit</Button>
+                    <Button 
+                        type="submit"
+                        disabled={isSubmitting}
+                    >Submit</Button>
                 </div>
             </form>
 
