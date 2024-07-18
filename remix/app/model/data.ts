@@ -1,3 +1,5 @@
+export type Address = `0x${string}`
+
 export interface INFTItem {
     nftContract: string;
     tokenId: bigint;

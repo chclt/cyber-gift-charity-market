@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
-import { useAccount, useReadContract } from "wagmi";
-import { INFTItem } from "../model/data";
+import { useReadContract } from "wagmi";
+import { Address, INFTItem } from "../model/data";
 import { marketContractAbi, marketContractAddress } from "~/config/market-contract";
 
-export function useFetchMyNFTs(): {
+export function useFetchMyNFTs(address: Address): {
     nftItems: INFTItem[];
     isListFetching: boolean;
     delayRefresh: () => void;
 } {
-    const { address: userAddress } = useAccount();
     const [nftItems, setNftItems] = useState<INFTItem[]>([]);
 
     const { data: nftList, dataUpdatedAt, refetch: refetchList, isFetching: isListFetching } = useReadContract(
@@ -16,7 +15,7 @@ export function useFetchMyNFTs(): {
             abi: marketContractAbi,
             address: marketContractAddress,
             functionName: 'getNFTAwardedByUser',
-            args: [userAddress]
+            args: [address]
         }
     );
 
