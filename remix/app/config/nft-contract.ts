@@ -5,6 +5,11 @@ export const nftAbi = [
 		"type": "constructor"
 	},
 	{
+		"inputs": [],
+		"name": "ERC721EnumerableForbiddenBatchMint",
+		"type": "error"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -108,6 +113,22 @@ export const nftAbi = [
 		"type": "error"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"name": "ERC721OutOfBoundsIndex",
+		"type": "error"
+	},
+	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -187,6 +208,25 @@ export const nftAbi = [
 			}
 		],
 		"name": "MetadataUpdate",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "creator",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "NFTMinted",
 		"type": "event"
 	},
 	{
@@ -303,7 +343,7 @@ export const nftAbi = [
 			},
 			{
 				"internalType": "string",
-				"name": "tokenURI",
+				"name": "tokenURIString",
 				"type": "string"
 			}
 		],
@@ -455,6 +495,49 @@ export const nftAbi = [
 		"inputs": [
 			{
 				"internalType": "uint256",
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"name": "tokenByIndex",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"name": "tokenOfOwnerByIndex",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
 				"name": "tokenId",
 				"type": "uint256"
 			}
@@ -465,6 +548,19 @@ export const nftAbi = [
 				"internalType": "string",
 				"name": "",
 				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "totalSupply",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -495,4 +591,4 @@ export const nftAbi = [
 	}
 ]
 
-export const nftContractAddress = '0xcc71b3a2a07faa7b7f00f956e7cb6f1cf9b9dfe3'
+export const nftContractAddress = '0x4071f3a00fb3bbfdcf5124d616a26977ce8be99f'

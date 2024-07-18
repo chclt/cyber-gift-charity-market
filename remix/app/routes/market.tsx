@@ -9,6 +9,7 @@ import { useBuyNFTItem } from '../hooks/useBuyNFTItem';
 import { useAddNFTToMarket } from '../hooks/useAddNFTToMarket';
 import { useRemoveNFTFromMarket } from '../hooks/useRemoveNFTFromMarket';
 import { ClientOnly } from "remix-utils/client-only";
+import { useAccount } from 'wagmi';
 
 const Market: React.FC = () => {
     const { showMessage, msgToggle, msg } = useMessage();

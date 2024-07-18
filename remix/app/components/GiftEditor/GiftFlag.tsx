@@ -27,9 +27,19 @@ import "./GiftFlag.css";
 import { useRef, useState } from "react";
 
 import { createGift, sendGift } from "~/lib/common";
+import { useAccount, useWriteContract, useReadContract, useWaitForTransactionReceipt } from "wagmi";
+import { nftAbi, nftContractAddress } from "~/config/nft-contract";
+import { wagmiConfig } from "~/config/wagmi-config";
+import { waitForTransactionReceipt } from "@wagmi/core"
+import { marketContractAbi, marketContractAddress } from "~/config/market-contract";
 
 
 export function GiftFlag() {
+    const { address: useAddress } = useAccount();
+
+
+
+
 
     const canvas = useRef<HTMLDivElement>();
 
@@ -38,7 +48,16 @@ export function GiftFlag() {
     const [text, setText] = useState("");
     const [address, setAddress] = useState("");
 
+
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
+
+
+
+    const { writeContractAsync: mintNFT, data:mintHash } = useWriteContract();
+    const { writeContractAsync: sentNFT, data:sentHash } = useWriteContract();
+    const result = useWaitForTransactionReceipt({hash: mintHash});
+
 
     const handleSubmit = () => {
         if (!canvas.current) return;
@@ -51,11 +70,71 @@ export function GiftFlag() {
         })
         .then((file) => {
             if (!file) return;
-            return createGift(file);
+            // return createGift(file);
+            return "https://bafkreiaxwipo2zanr3wfr7id3ezqjxs6gvzc4yuu4jeyabffw6jw4ilxgu.ipfs.w3s.link/"
         })
-        .then((ipfsUrl) => {
+        .then(async (ipfsUrl) => {
             if (!ipfsUrl) return;
-            return sendGift("senderAdd", address, ipfsUrl);
+            // return sendGift("senderAdd", address, ipfsUrl);
+
+            // const mintTx = await writeContractAsync({
+            //     abi: nftAbi,
+            //     address: nftContractAddress,
+            //     functionName: "mint",
+            //     args: [
+            //         useAddress,
+            //         ipfsUrl
+            //     ],
+            // })
+            // const result = await waitForTransactionReceipt(wagmiConfig, { hash: mintTx });
+
+            // console.log(mintTx);
+
+
+            // // waitForTransactionReceipt(
+            // //     tx,
+            // //     (receipt) => {
+            // //         console.log(receipt);
+            // //     }
+            // // )
+
+
+            // console.log(mintHash);
+            // console.log(result);
+
+            // // console.log(result.logs[1].data);
+            // // hex to number
+            // const nftId = BigInt(parseInt(result.logs[1].data, 16));
+        
+
+            const nftId = 1n;
+
+            console.log(nftId);
+            
+
+
+            
+            const sentTx = await sentNFT({
+                abi: marketContractAbi,
+                address: marketContractAddress,
+                functionName: "sentNFT",
+                args: [
+                    nftContractAddress,
+                    nftId,
+                    address,
+                    1000000n,
+                ],
+            })
+
+            const sentResult = await waitForTransactionReceipt(wagmiConfig, { hash: sentTx });
+
+            console.log(sentTx);
+            console.log(sentResult);
+
+
+
+
+
         })
         .finally(() => {
             setIsSubmitting(false);
