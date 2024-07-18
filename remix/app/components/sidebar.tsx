@@ -50,7 +50,7 @@ export function Sidebar({ className }: SidebarProps) {
               </Button>
             </Link>
           </div>
-          <p className="my-4 px-4"><span className="mr-2 text-lg">💖</span>公益账户: {formatUnits(balance, paymentTokenDecimal)}</p>
+          <p className="my-4 px-4"><span className="mr-2 text-lg">💖</span>公益账户余额: {formatUnits(balance, paymentTokenDecimal)}</p>
           <ConnectButton></ConnectButton>
         </div>
       </div>
