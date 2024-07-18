@@ -1,4 +1,3 @@
-import { useWriteContract } from "wagmi";
 
 export async function createGift(file: File) {
     return fetch("/api/gift", {

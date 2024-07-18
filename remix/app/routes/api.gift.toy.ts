@@ -1,0 +1,64 @@
+import { LoaderFunction, ActionFunction, json } from "@remix-run/node";
+
+
+import * as Client from '@web3-storage/w3up-client'
+import { StoreMemory } from '@web3-storage/w3up-client/stores/memory'
+import * as Proof from '@web3-storage/w3up-client/proof'
+import { Signer } from '@web3-storage/w3up-client/principal/ed25519'
+
+export const loader: LoaderFunction = async ({ context, request, params }) => {
+
+
+    const taskId = new URL(request.url).searchParams.get("task_id");
+
+
+    const result = await fetch(`https://api.tripo3d.ai/v2/openapi/task/${taskId}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${process.env.TRIPO_SECRET}`
+        }
+    })
+
+    const jsonRes = await result.json();
+
+    return json({
+        data: jsonRes.data,
+        success: true
+    }, 200)
+    
+};
+
+export const action = async ({
+    context, request, params
+}: ActionFunction) => {
+
+    switch (request.method) { 
+        case "POST": {
+
+            
+            const bodyJson = await request.json();
+            const { prompt } = bodyJson;
+
+            const result = await fetch("https://api.tripo3d.ai/v2/openapi/task", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${process.env.TRIPO_SECRET}`
+                },
+                body: JSON.stringify({
+                    "type": "text_to_model",
+                    "prompt": prompt
+                })
+            })
+
+            const jsonRes = await result.json();
+
+            return json({
+                data: jsonRes.data,
+                success: true
+            }, 200)
+
+        }
+    }
+};
