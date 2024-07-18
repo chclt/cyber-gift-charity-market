@@ -11,6 +11,16 @@ import {
   FormMessage,
 } from "~/components/ui/form"
 
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+    DialogFooter,
+  } from "~/components/ui/dialog"
+
 import { toBlob, toPng } from "html-to-image";
 
 import "./GiftFlag.css";
@@ -43,6 +53,10 @@ export function GiftFlag() {
         .then((file) => {
             if (!file) return;
             return createGift(file);
+        })
+        .then((file) => {
+            if (!file) return;
+            return sendGift(file);
         })
         .finally(() => {
             setIsSubmitting(false);
@@ -84,10 +98,41 @@ export function GiftFlag() {
                         ))
                     }
 
-                    <Button 
-                        type="submit"
-                        disabled={isSubmitting}
-                    >Submit</Button>
+
+ 
+
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button>赠送锦旗</Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-md">
+                            <DialogHeader>
+                                <DialogTitle>赠送锦旗</DialogTitle>
+                                <DialogDescription>
+                                    填写对方的地址
+                                </DialogDescription>
+                            </DialogHeader>
+                            <div className="flex items-center space-x-2">
+                                <div className="grid flex-1 gap-2">
+                                    <Label htmlFor="link" className="sr-only">
+                                        地址
+                                    </Label>
+                                    <Input
+                                        id="link"
+                                    />
+                                </div>
+
+                            </div>
+                            <DialogFooter className="sm:justify-start">
+                                <Button
+                                    disabled={isSubmitting}
+                                    onClick={() => {handleSubmit()}}
+                                >赠送锦旗</Button>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
+
+                    
                 </div>
             </form>
 
