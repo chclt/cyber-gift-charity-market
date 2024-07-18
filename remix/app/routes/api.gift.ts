@@ -20,20 +20,8 @@ export const action = async ({
 
     switch (request.method) { 
         case "POST": {
-            const userAddress = request.headers.get("origin");
-            console.log(userAddress);
+
             
-            const formData = await unstable_parseMultipartFormData(
-                request, 
-                unstable_createMemoryUploadHandler({
-                    maxPartSize: 1024 * 1024 * 10,
-                })
-            );
-            const file = formData.get("file");
-            console.log(file);
-
-
-
             console.log(process.env.WEB3STORAGE_KEY, process.env.WEB3STORAGE_PROOF);
             
 

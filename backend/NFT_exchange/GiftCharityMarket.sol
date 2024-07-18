@@ -20,6 +20,7 @@ contract GiftCharityMarket is ReentrancyGuard {
         uint256 tokenId;
     }
 
+    // TODO  add honer list
     mapping(address => mapping(uint256 => NFTItem)) public nftStore;
     NFTLocation[] public nftList;
 
@@ -82,6 +83,8 @@ contract GiftCharityMarket is ReentrancyGuard {
             "Payment failed"
         );
 
+        // TODO add to owner list
+        
         require(nft.isApprovedForAll(msg.sender, address(this)), "not approved");
         nft.safeTransferFrom(msg.sender, _recipient, _tokenId);
 

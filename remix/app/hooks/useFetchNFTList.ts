@@ -27,7 +27,7 @@ export function useFetchNFTList(): {
     useEffect(() => {        
         if (nftList) {
             const activeNFTItems = (nftList as INFTItem[]).filter((item: INFTItem) => item.isActive);
-            setNftItems(activeNFTItems as INFTItem[]);
+            setNftItems(nftList as INFTItem[]);
         }
     }, [dataUpdatedAt]);
 

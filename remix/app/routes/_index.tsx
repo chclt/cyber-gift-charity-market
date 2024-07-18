@@ -4,6 +4,10 @@ import { GiftEditor } from "~/components/GiftEditor/index";
 import { Sidebar } from "~/components/sidebar";
 import { Button } from "~/components/ui/button";
 
+
+import * as Delegation from '@web3-storage/w3up-client/delegation'
+import * as Client from '@web3-storage/w3up-client'
+
 export const meta: MetaFunction = () => {
   return [
     { title: "New Remix App" },
@@ -19,7 +23,7 @@ export default function Index() {
 
     if (!gift.current) return;
      
-    fetch("/api/gift", {
+    const res = await fetch("/api/gift", {
       method: "POST",
       body: (() => {
         const formData = new FormData();
@@ -27,6 +31,29 @@ export default function Index() {
         return formData;
       })()
     })
+
+      const client = await Client.create()
+ 
+    // Fetch the delegation from the backend
+    const data = await res.arrayBuffer();
+    
+    const delegation = await Delegation.extract(new Uint8Array(data))
+    if (!delegation.ok) {
+      throw new Error('Failed to extract delegation', { cause: delegation.error })
+    }
+   
+    // Add proof that this agent has been delegated capabilities on the space
+    const space = await client.addSpace(delegation.ok)
+    client.setCurrentSpace(space.did())
+
+    const cid = await client.upload(gift.current)
+
+    console.log(`${cid}`);
+    
+
+    
+
+
   }
 
   return (
