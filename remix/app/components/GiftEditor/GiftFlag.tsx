@@ -26,18 +26,17 @@ import { toBlob, toPng } from "html-to-image";
 import "./GiftFlag.css";
 import { useRef, useState } from "react";
 
-import { createGift } from "~/lib/common";
+import { createGift, sendGift } from "~/lib/common";
 
 
 export function GiftFlag() {
-
-
 
     const canvas = useRef<HTMLDivElement>();
 
     const [sender, setSender] = useState("");
     const [receiver, setReceiver] = useState("");
     const [text, setText] = useState("");
+    const [address, setAddress] = useState("");
 
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
@@ -54,9 +53,9 @@ export function GiftFlag() {
             if (!file) return;
             return createGift(file);
         })
-        .then((file) => {
-            if (!file) return;
-            return sendGift(file);
+        .then((ipfsUrl) => {
+            if (!ipfsUrl) return;
+            return sendGift("senderAdd", address, ipfsUrl);
         })
         .finally(() => {
             setIsSubmitting(false);
@@ -79,6 +78,9 @@ export function GiftFlag() {
                         case "text":
                             setText(e.target.value);
                             break;
+                        case "address":
+                            setAddress(e.target.value);
+                            break;
                     }
                 }}
                 onSubmit={(e) => {
@@ -88,51 +90,34 @@ export function GiftFlag() {
                 >
                 <div className="grid grid-cols-2 gap-4">
                     {
-                        ["sender", "receiver", "text"].map((label) => (
-                            <div key={label} className="flex flex-col">
+                        [
+                            {label: "送给", value: "sender"}, 
+                            {label: "署名", value: "receiver"}, 
+                            {label: "内容", value: "text"}
+                        ].map(({label, value}) => (
+                            <div key={value} className="flex flex-col">
                                 <label>
                                     <h4 className="text-sm">{label}</h4>
-                                    <Input name={label} />
+                                    <Input name={value} />
                                 </label>
                             </div>
                         ))
+
+
                     }
 
-
+                    <div className="col-span-2 flex flex-col">
+                        <label>
+                            <h4 className="text-sm">对方的地址</h4>
+                            <Input name="address" />
+                        </label>
+                    </div>
  
+                    <Button
+                        disabled={isSubmitting}
+                        type="submit"
+                    >赠送锦旗</Button>
 
-                    <Dialog>
-                        <DialogTrigger asChild>
-                            <Button>赠送锦旗</Button>
-                        </DialogTrigger>
-                        <DialogContent className="sm:max-w-md">
-                            <DialogHeader>
-                                <DialogTitle>赠送锦旗</DialogTitle>
-                                <DialogDescription>
-                                    填写对方的地址
-                                </DialogDescription>
-                            </DialogHeader>
-                            <div className="flex items-center space-x-2">
-                                <div className="grid flex-1 gap-2">
-                                    <Label htmlFor="link" className="sr-only">
-                                        地址
-                                    </Label>
-                                    <Input
-                                        id="link"
-                                    />
-                                </div>
-
-                            </div>
-                            <DialogFooter className="sm:justify-start">
-                                <Button
-                                    disabled={isSubmitting}
-                                    onClick={() => {handleSubmit()}}
-                                >赠送锦旗</Button>
-                            </DialogFooter>
-                        </DialogContent>
-                    </Dialog>
-
-                    
                 </div>
             </form>
 

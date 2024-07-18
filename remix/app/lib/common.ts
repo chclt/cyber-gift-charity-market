@@ -11,6 +11,12 @@ export async function createGift(file: File) {
         if (res.ok) {
           const json = await res.json();
           console.log(`${json.data.cid}`);
+          return json.data.cid;
         }
     })
+}
+
+export async function sendGift(senderAddress: string, receiverAddress: string, ipfsUrl: string) {
+    console.log("sendGift", senderAddress, receiverAddress, ipfsUrl);
+    
 }
