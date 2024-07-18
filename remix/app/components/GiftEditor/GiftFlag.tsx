@@ -73,8 +73,8 @@ export function GiftFlag() {
         })
         .then((file) => {
             if (!file) return;
-            // return createGift(file);
-            return "https://bafkreiaxwipo2zanr3wfr7id3ezqjxs6gvzc4yuu4jeyabffw6jw4ilxgu.ipfs.w3s.link/"
+            return createGift(file);
+            // return "https://bafkreiaxwipo2zanr3wfr7id3ezqjxs6gvzc4yuu4jeyabffw6jw4ilxgu.ipfs.w3s.link/"
         })
         .then(async (ipfsUrl) => {
             if (!ipfsUrl) return;
@@ -182,8 +182,8 @@ export function GiftFlag() {
                 <div className="grid grid-cols-2 gap-4">
                     {
                         [
-                            {label: "送给", value: "sender"}, 
-                            {label: "署名", value: "receiver"}, 
+                            {label: "署名", value: "sender"}, 
+                            {label: "送给", value: "receiver"}, 
                             {label: "内容", value: "text"}
                         ].map(({label, value}) => (
                             <div key={value} className="flex flex-col">
