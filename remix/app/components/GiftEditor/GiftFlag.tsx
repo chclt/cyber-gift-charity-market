@@ -32,6 +32,7 @@ import { nftAbi, nftContractAddress } from "~/config/nft-contract";
 import { wagmiConfig } from "~/config/wagmi-config";
 import { waitForTransactionReceipt } from "@wagmi/core"
 import { marketContractAbi, marketContractAddress } from "~/config/market-contract";
+import { paymentTokenContractAbi, paymentTokenContractAddress } from "~/config/payment-token-contract";
 
 
 export function GiftFlag() {
@@ -53,6 +54,8 @@ export function GiftFlag() {
 
 
 
+    const { writeContractAsync: approveMarketUseNFT } = useWriteContract();
+    const { writeContractAsync: approveMarketUsePaymentToken } = useWriteContract();
 
     const { writeContractAsync: mintNFT, data:mintHash } = useWriteContract();
     const { writeContractAsync: sentNFT, data:sentHash } = useWriteContract();
@@ -77,16 +80,16 @@ export function GiftFlag() {
             if (!ipfsUrl) return;
             // return sendGift("senderAdd", address, ipfsUrl);
 
-            // const mintTx = await writeContractAsync({
-            //     abi: nftAbi,
-            //     address: nftContractAddress,
-            //     functionName: "mint",
-            //     args: [
-            //         useAddress,
-            //         ipfsUrl
-            //     ],
-            // })
-            // const result = await waitForTransactionReceipt(wagmiConfig, { hash: mintTx });
+            const mintTx = await mintNFT({
+                abi: nftAbi,
+                address: nftContractAddress,
+                functionName: "mint",
+                args: [
+                    useAddress,
+                    ipfsUrl
+                ],
+            })
+            const result = await waitForTransactionReceipt(wagmiConfig, { hash: mintTx });
 
             // console.log(mintTx);
 
@@ -104,16 +107,25 @@ export function GiftFlag() {
 
             // // console.log(result.logs[1].data);
             // // hex to number
-            // const nftId = BigInt(parseInt(result.logs[1].data, 16));
-        
+            const nftId = BigInt(parseInt(result.logs[1].data, 16));
+            const minSentPrice = 1000000n;
 
-            const nftId = 1n;
+            const approvePaymentTx = await approveMarketUsePaymentToken({
+                address: paymentTokenContractAddress,
+                abi: paymentTokenContractAbi,
+                functionName: "approve",
+                args: [marketContractAddress, minSentPrice],
+              })
+            await waitForTransactionReceipt(wagmiConfig, { hash: approvePaymentTx });
 
-            console.log(nftId);
-            
+            const approveNFTTx = await approveMarketUseNFT({
+                address: nftContractAddress,
+                abi: nftAbi,
+                functionName: "setApprovalForAll",
+                args: [marketContractAddress, true],
+              })
+            await waitForTransactionReceipt(wagmiConfig, { hash: approveNFTTx });
 
-
-            
             const sentTx = await sentNFT({
                 abi: marketContractAbi,
                 address: marketContractAddress,
@@ -122,7 +134,7 @@ export function GiftFlag() {
                     nftContractAddress,
                     nftId,
                     address,
-                    1000000n,
+                    minSentPrice,
                 ],
             })
 
