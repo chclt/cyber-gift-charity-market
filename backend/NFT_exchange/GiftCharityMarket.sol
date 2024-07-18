@@ -15,12 +15,20 @@ contract GiftCharityMarket is ReentrancyGuard {
         bool isActive;
     }
 
+    struct AwardedNFT {
+        address nftContract;
+        uint256 tokenId;
+        address sender;
+        uint256 addTime;
+    }
+
     struct NFTLocation {
         address nftContract;
         uint256 tokenId;
     }
 
-    // TODO  add honer list
+    mapping(address => AwardedNFT[]) public nftAwardedMap;
+
     mapping(address => mapping(uint256 => NFTItem)) public nftStore;
     NFTLocation[] public nftList;
 
@@ -77,19 +85,36 @@ contract GiftCharityMarket is ReentrancyGuard {
         IERC721 nft = IERC721(_nftContract);
         require(nft.ownerOf(_tokenId) == msg.sender, "You do not own the NFT");
 
-        require(_price >= minSentPrice, "Price is lower than minimum sent price");
+        require(
+            _price >= minSentPrice,
+            "Price is lower than minimum sent price"
+        );
+
         require(
             paymentToken.transferFrom(msg.sender, publicDonateAccount, _price),
             "Payment failed"
         );
 
-        // TODO add to owner list
-        
-        require(nft.isApprovedForAll(msg.sender, address(this)), "not approved");
+        require(
+            nft.isApprovedForAll(msg.sender, address(this)),
+            "not approved"
+        );
         nft.safeTransferFrom(msg.sender, _recipient, _tokenId);
 
         uint256 sentTime = block.timestamp;
-        emit NFTSent(_nftContract, _tokenId, msg.sender, _recipient, _price, sentTime);
+
+        nftAwardedMap[_recipient].push(
+            AwardedNFT(_nftContract, _tokenId, msg.sender, block.timestamp)
+        );
+
+        emit NFTSent(
+            _nftContract,
+            _tokenId,
+            msg.sender,
+            _recipient,
+            _price,
+            sentTime
+        );
     }
 
     function addNFT(
@@ -135,7 +160,8 @@ contract GiftCharityMarket is ReentrancyGuard {
             ),
             "Payment failed"
         );
-        require(nft.isApprovedForAll(msg.sender, address(this)));
+
+        require(nft.isApprovedForAll(nftItem.seller, address(this)));
 
         nft.safeTransferFrom(nftItem.seller, msg.sender, _tokenId);
         nftItem.isActive = false;
@@ -163,5 +189,9 @@ contract GiftCharityMarket is ReentrancyGuard {
         }
 
         return _nftItems;
+    }
+
+    function getNFTAwardedByUser(address _user) public view returns (AwardedNFT[] memory) {
+        return nftAwardedMap[_user];
     }
 }
