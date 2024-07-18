@@ -3,13 +3,16 @@ import { Button } from "~/components/ui/button"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import 'node_modules/@rainbow-me/rainbowkit/dist/index.css';
 import { Link, useLocation } from "@remix-run/react";
+import { useFetchDonateAccountBalance } from "~/hooks/useFetchDonateAccountBalance";
+import { formatUnits } from "viem";
+import { paymentTokenDecimal } from "~/config/payment-token-contract";
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
   
 }
 
 export function Sidebar({ className }: SidebarProps) {
-
+  const { balance } = useFetchDonateAccountBalance();
   const location = useLocation();
 
   return (
@@ -88,6 +91,7 @@ export function Sidebar({ className }: SidebarProps) {
               </Button>
             </Link>
           </div>
+          <p>公益账户余额: {formatUnits(balance, paymentTokenDecimal)}</p>
           <ConnectButton></ConnectButton>
         </div>
       </div>
