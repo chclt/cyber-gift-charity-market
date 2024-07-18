@@ -11,28 +11,23 @@ import {
   FormMessage,
 } from "~/components/ui/form"
 
-import { toPng } from "html-to-image";
+import { toBlob, toPng } from "html-to-image";
 
 import "./GiftFlag.css";
 import { useRef } from "react";
 
 interface GiftFlagProps extends React.HTMLAttributes<HTMLDivElement> {
-    options: {
-        sender?: string;
-        receiver?: string;
-        text?: string;
-    }
+    onFinish: (file: File) => void;
 }
 
-export function  GiftFlag({options}: GiftFlagProps) {
+export function  GiftFlag({onFinish}: GiftFlagProps) {
 
     const canvas = useRef<HTMLDivElement>();
 
     const handleGenImage = () => {
-        toPng(canvas.current).then((dataUrl) => {
-            const img = new Image();
-            img.src = dataUrl;
-            document.body.appendChild(img);
+        if (!canvas.current) return;
+        toBlob(canvas.current).then((blob) => {
+            blob && onFinish(new File([blob], "flag.png", {type: "image/png"}));
         })
     }
 
@@ -63,28 +58,29 @@ export function  GiftFlag({options}: GiftFlagProps) {
                 </div>
             </form>
 
-            <div ref={canvas} className="relative" style={{
-                width: "375px",
-                paddingBottom:"133.136%"
+            <div ref={canvas} className="" style={{
+                width: "375px"
             }}>
-                <img className="absolute inset-0 w-full h-full" src="./images/GiftFlag/bg.jpg" alt="" />
-                <div className="absolute inset-0 flex flex-col justify-between items-stretch" style={{
-                        writingMode: "vertical-rl",
-                        fontFamily: "LinhaiLishu", 
-                        fontWeight: 600,
-                        color: "#eaab0c",
-                        padding: "15% 15% 27%"
-                    }}>
-                    <span className="text-[1.75rem] ">送给某某人</span>
-                    <span className="text-[3.5rem] self-center">神医啊</span>
-                    <span className="text-[1.75rem] self-end">2020</span>
+                <div className="relative w-full" style={{
+                    paddingBottom:"133.136%"
+                }}>
+
+                    <img className="absolute inset-0 w-full h-full" src="./images/GiftFlag/bg.jpg" alt="" />
+                    <div className="absolute inset-0 flex flex-col justify-between items-stretch" style={{
+                            writingMode: "vertical-rl",
+                            fontFamily: "LinhaiLishu", 
+                            fontWeight: 600,
+                            color: "#eaab0c",
+                            padding: "15% 15% 25%"
+                        }}>
+                        <span className="text-[1.75rem] ">送给某某人</span>
+                        <span className="text-[3.5rem] self-center">神医啊</span>
+                        <span className="text-[1.75rem] self-end">2020</span>
+                    </div>
                 </div>
             </div>
 
-            
-            <span>{options?.sender ?? ""}</span>
-            <span>{options?.receiver ?? ""}</span>
-            <span>{options?.text ?? ""}</span>
+    
         </div>
     )
 }

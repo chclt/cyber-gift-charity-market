@@ -7,11 +7,11 @@ export function GiftEditor({
     onFinish 
 }: {
     template: string;
-    onFinish: () => void;
+    onFinish: (file: File) => void;
 }) {
     switch (template) {
         case "flag": {
-            return <GiftFlag />
+            return <GiftFlag onFinish={file => onFinish(file)} />
         }
     }
 }
