@@ -3,20 +3,31 @@ import { useWriteContract, useWaitForTransactionReceipt } from "wagmi";
 import { marketContractAbi, marketContractAddress } from "../config/market-contract";
 import { INFTItem } from "../model/data";
 import { StatusCallback } from ".";
+import { paymentTokenContractAbi, paymentTokenContractAddress, paymentTokenDecimal } from "~/config/payment-token-contract";
+import { waitForTransactionReceipt } from "@wagmi/core";
+import { wagmiConfig } from "~/config/wagmi-config";
 
 export function useBuyNFTItem(): {
     isBuyConfirming: boolean;
     buyNFTItem: (item: INFTItem, statusCallback: StatusCallback) => void;
 } {
-    // TODO add approve
-
     const { data: buyHash, writeContract: writeContractBuy } = useWriteContract();
 
     const { isLoading: isBuyConfirming } =
         useWaitForTransactionReceipt({ hash: buyHash });
 
-    const buyNFTItem = (item: INFTItem, statusCallback: StatusCallback) => {
+    const { writeContractAsync: approveMarketUsePaymentToken } = useWriteContract();
+
+    const buyNFTItem = async (item: INFTItem, statusCallback: StatusCallback) => {
         const { onSuccess } = statusCallback;
+
+        const approvePaymentTx = await approveMarketUsePaymentToken({
+            address: paymentTokenContractAddress,
+            abi: paymentTokenContractAbi,
+            functionName: "approve",
+            args: [marketContractAddress, BigInt(Number(item.price) * Math.pow(10, paymentTokenDecimal))],
+          })
+        await waitForTransactionReceipt(wagmiConfig, { hash: approvePaymentTx });
         
         writeContractBuy({
             abi: marketContractAbi,
