@@ -14,7 +14,7 @@ import {
 import { toBlob, toPng } from "html-to-image";
 
 import "./GiftFlag.css";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 interface GiftFlagProps extends React.HTMLAttributes<HTMLDivElement> {
     onFinish: (file: File) => void;
@@ -23,6 +23,11 @@ interface GiftFlagProps extends React.HTMLAttributes<HTMLDivElement> {
 export function  GiftFlag({onFinish}: GiftFlagProps) {
 
     const canvas = useRef<HTMLDivElement>();
+
+    const [sender, setSender] = useState("");
+    const [receiver, setReceiver] = useState("");
+    const [text, setText] = useState("");
+
 
     const handleGenImage = () => {
         if (!canvas.current) return;
@@ -34,9 +39,19 @@ export function  GiftFlag({onFinish}: GiftFlagProps) {
     return (
         <div className="flex flex-col">
             <form 
-                // onChange={(e) => {
-                //     console.log(e.target.value);
-                // }}
+                onChange={(e) => {
+                    switch (e.target.name) {
+                        case "sender":
+                            setSender(e.target.value);
+                            break;
+                        case "receiver":
+                            setReceiver(e.target.value);
+                            break;
+                        case "text":
+                            setText(e.target.value);
+                            break;
+                    }
+                }}
                 onSubmit={(e) => {
                     e.preventDefault();
                     handleGenImage();
@@ -44,7 +59,7 @@ export function  GiftFlag({onFinish}: GiftFlagProps) {
                 >
                 <div className="grid grid-cols-2 gap-4">
                     {
-                        ["sender", "receiver", "text1", "text2"].map((label) => (
+                        ["sender", "receiver", "text"].map((label) => (
                             <div key={label} className="flex flex-col">
                                 <label>
                                     <h4 className="text-sm">{label}</h4>
@@ -73,9 +88,9 @@ export function  GiftFlag({onFinish}: GiftFlagProps) {
                             color: "#eaab0c",
                             padding: "15% 15% 25%"
                         }}>
-                        <span className="text-[1.75rem] ">送给某某人</span>
-                        <span className="text-[3.5rem] self-center">神医啊</span>
-                        <span className="text-[1.75rem] self-end">2020</span>
+                        <span className="text-[1.75rem] ">{receiver}</span>
+                        <span className="text-[3.5rem] self-center">{text}</span>
+                        <span className="text-[1.75rem] self-end">{sender}</span>
                     </div>
                 </div>
             </div>
