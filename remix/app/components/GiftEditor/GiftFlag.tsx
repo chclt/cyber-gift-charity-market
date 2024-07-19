@@ -217,14 +217,14 @@ export function GiftFlag() {
                     <img className="absolute inset-0 w-full h-full" src="./images/GiftFlag/bg.jpg" alt="" />
                     <div className="absolute inset-0 flex flex-col justify-between items-stretch" style={{
                             writingMode: "vertical-rl",
-                            fontFamily: "LinhaiLishu", 
+                            fontFamily: "FangzhengLishu", 
                             fontWeight: 600,
                             color: "#eaab0c",
                             padding: "15% 15% 25%"
                         }}>
-                        <span className="text-[1.75rem] ">{receiver}</span>
-                        <span className="text-[3.5rem] self-center">{text}</span>
-                        <span className="text-[1.75rem] self-end">{sender}</span>
+                        <span className="text-[1.75rem] whitespace-pre">{receiver}</span>
+                        <span className="text-[3.5rem] self-center whitespace-pre">{text}</span>
+                        <span className="text-[1.75rem] self-end whitespace-pre">{sender}</span>
                     </div>
                 </div>
             </div>
