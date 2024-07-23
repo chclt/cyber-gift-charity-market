@@ -35,6 +35,12 @@ importers:
       '@react-three/drei':
         specifier: ^9.108.4
         version: 9.108.4(@react-three/fiber@8.16.8(react-dom@18.3.1(react@18.3.1))(react-native@0.74.3(@babel/core@7.24.9)(@babel/preset-env@7.24.8(@babel/core@7.24.9))(@types/react@18.3.3)(bufferutil@4.0.8)(encoding@0.1.13)(react@18.3.1)(utf-8-validate@5.0.10))(react@18.3.1)(three@0.166.1))(@types/react@18.3.3)(@types/three@0.163.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(three@0.166.1)
+      '@remix-run/cloudflare':
+        specifier: ^2.10.3
+        version: 2.10.3(@cloudflare/workers-types@4.20240722.0)(typescript@5.5.3)
+      '@remix-run/cloudflare-pages':
+        specifier: ^2.10.3
+        version: 2.10.3(@cloudflare/workers-types@4.20240722.0)(typescript@5.5.3)
       '@remix-run/node':
         specifier: ^2.10.3
         version: 2.10.3(typescript@5.5.3)
@@ -88,7 +94,7 @@ importers:
         version: 6.0.13(react-dom@18.3.1(react@18.3.1))(react-native@0.74.3(@babel/core@7.24.9)(@babel/preset-env@7.24.8(@babel/core@7.24.9))(@types/react@18.3.3)(bufferutil@4.0.8)(encoding@0.1.13)(react@18.3.1)(utf-8-validate@5.0.10))(react@18.3.1)(three@0.166.1)
       remix-utils:
         specifier: ^7.6.0
-        version: 7.6.0(@remix-run/node@2.10.3(typescript@5.5.3))(@remix-run/react@2.10.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/router@1.18.0)(react@18.3.1)(zod@3.23.8)
+        version: 7.6.0(@remix-run/cloudflare@2.10.3(@cloudflare/workers-types@4.20240722.0)(typescript@5.5.3))(@remix-run/node@2.10.3(typescript@5.5.3))(@remix-run/react@2.10.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/router@1.18.0)(react@18.3.1)(zod@3.23.8)
       styled-components:
         specifier: ^6.1.11
         version: 6.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -946,6 +952,12 @@ packages:
   '@babel/types@7.24.9':
     resolution: {integrity: sha512-xm8XrMKz0IlUdocVbYJe0Z9xEgidU7msskG8BbhnTPK/HZ2z/7FP7ykqPgrUH+C+r414mNfNWam1f2vqOjqjYQ==}
     engines: {node: '>=6.9.0'}
+
+  '@cloudflare/kv-asset-handler@0.1.3':
+    resolution: {integrity: sha512-FNcunDuTmEfQTLRLtA6zz+buIXUHj1soPvSWzzQFBC+n2lsy+CGf/NIrR3SEPCmsVNQj70/Jx2lViCpq+09YpQ==}
+
+  '@cloudflare/workers-types@4.20240722.0':
+    resolution: {integrity: sha512-/N072r7w7jNCgciRtImOQnHODn8CNwl3NHGO2lmC5bCsgevTRNeNj6B2IjS+OgEfo0qFoBgLejISl6ot9QvGvA==}
 
   '@coinbase/wallet-sdk@3.9.3':
     resolution: {integrity: sha512-N/A2DRIf0Y3PHc1XAMvbBUu4zisna6qAdqABMZwBMNEfWrXpAwx16pZGkYCLGE+Rvv1edbcB2LYDRnACNcmCiw==}
@@ -2063,6 +2075,26 @@ packages:
       react-dom:
         optional: true
       react-native:
+        optional: true
+
+  '@remix-run/cloudflare-pages@2.10.3':
+    resolution: {integrity: sha512-Tg2pAkjO6RAXA3iCfy5icAdQMCROYHIcPsSUUSJ1HJ+XSGeiHu6GXSBr9Mn41iKQxYpk7KKVa/5rSJvFjq934Q==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      '@cloudflare/workers-types': ^4.0.0
+      typescript: ^5.1.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
+  '@remix-run/cloudflare@2.10.3':
+    resolution: {integrity: sha512-bAYoB7VI7/Zv8LpNNvUEbbnaHerXvdx+5f5xnkOtLH35HJer9YRouLR0giL7ictaJbzZoBHaB0bOvAVkfGsEdA==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      '@cloudflare/workers-types': ^4.0.0
+      typescript: ^5.1.0
+    peerDependenciesMeta:
+      typescript:
         optional: true
 
   '@remix-run/dev@2.10.3':
@@ -5438,8 +5470,8 @@ packages:
   one-webcrypto@1.0.3:
     resolution: {integrity: sha512-fu9ywBVBPx0gS9K0etIROTiCkvI5S1TDjFsYFb3rC1ewFxeOqsbzq7aIMBHsYfrTHBcGXJaONXXjTl8B01cW1Q==}
 
-  one-webcrypto@https://codeload.github.com/web3-storage/one-webcrypto/tar.gz/5148cd14d5489a8ac4cd38223870e02db15a2382:
-    resolution: {tarball: https://codeload.github.com/web3-storage/one-webcrypto/tar.gz/5148cd14d5489a8ac4cd38223870e02db15a2382}
+  one-webcrypto@git+https://git@github.com:web3-storage/one-webcrypto.git#5148cd14d5489a8ac4cd38223870e02db15a2382:
+    resolution: {commit: 5148cd14d5489a8ac4cd38223870e02db15a2382, repo: git@github.com:web3-storage/one-webcrypto.git, type: git}
     version: 1.0.3
 
   onetime@5.1.2:
@@ -8314,6 +8346,12 @@ snapshots:
       '@babel/helper-validator-identifier': 7.24.7
       to-fast-properties: 2.0.0
 
+  '@cloudflare/kv-asset-handler@0.1.3':
+    dependencies:
+      mime: 2.6.0
+
+  '@cloudflare/workers-types@4.20240722.0': {}
+
   '@coinbase/wallet-sdk@3.9.3':
     dependencies:
       bn.js: 5.2.1
@@ -9650,6 +9688,21 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       react-native: 0.74.3(@babel/core@7.24.9)(@babel/preset-env@7.24.8(@babel/core@7.24.9))(@types/react@18.3.3)(bufferutil@4.0.8)(encoding@0.1.13)(react@18.3.1)(utf-8-validate@5.0.10)
 
+  '@remix-run/cloudflare-pages@2.10.3(@cloudflare/workers-types@4.20240722.0)(typescript@5.5.3)':
+    dependencies:
+      '@cloudflare/workers-types': 4.20240722.0
+      '@remix-run/cloudflare': 2.10.3(@cloudflare/workers-types@4.20240722.0)(typescript@5.5.3)
+    optionalDependencies:
+      typescript: 5.5.3
+
+  '@remix-run/cloudflare@2.10.3(@cloudflare/workers-types@4.20240722.0)(typescript@5.5.3)':
+    dependencies:
+      '@cloudflare/kv-asset-handler': 0.1.3
+      '@cloudflare/workers-types': 4.20240722.0
+      '@remix-run/server-runtime': 2.10.3(typescript@5.5.3)
+    optionalDependencies:
+      typescript: 5.5.3
+
   '@remix-run/dev@2.10.3(@remix-run/react@2.10.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/serve@2.10.3(typescript@5.5.3))(@types/node@20.14.11)(bufferutil@4.0.8)(terser@5.31.3)(typescript@5.5.3)(utf-8-validate@5.0.10)(vite@5.3.4(@types/node@20.14.11)(terser@5.31.3))':
     dependencies:
       '@babel/core': 7.24.9
@@ -10754,7 +10807,7 @@ snapshots:
       bigint-mod-arith: 3.3.1
       conf: 11.0.2
       multiformats: 12.1.3
-      one-webcrypto: https://codeload.github.com/web3-storage/one-webcrypto/tar.gz/5148cd14d5489a8ac4cd38223870e02db15a2382
+      one-webcrypto: git+https://git@github.com:web3-storage/one-webcrypto.git#5148cd14d5489a8ac4cd38223870e02db15a2382
       p-defer: 4.0.1
       type-fest: 4.22.0
       uint8arrays: 4.0.10
@@ -14168,7 +14221,7 @@ snapshots:
 
   one-webcrypto@1.0.3: {}
 
-  one-webcrypto@https://codeload.github.com/web3-storage/one-webcrypto/tar.gz/5148cd14d5489a8ac4cd38223870e02db15a2382: {}
+  one-webcrypto@git+https://git@github.com:web3-storage/one-webcrypto.git#5148cd14d5489a8ac4cd38223870e02db15a2382: {}
 
   onetime@5.1.2:
     dependencies:
@@ -14939,10 +14992,11 @@ snapshots:
       mdast-util-to-hast: 12.3.0
       unified: 10.1.2
 
-  remix-utils@7.6.0(@remix-run/node@2.10.3(typescript@5.5.3))(@remix-run/react@2.10.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/router@1.18.0)(react@18.3.1)(zod@3.23.8):
+  remix-utils@7.6.0(@remix-run/cloudflare@2.10.3(@cloudflare/workers-types@4.20240722.0)(typescript@5.5.3))(@remix-run/node@2.10.3(typescript@5.5.3))(@remix-run/react@2.10.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/router@1.18.0)(react@18.3.1)(zod@3.23.8):
     dependencies:
       type-fest: 4.22.0
     optionalDependencies:
+      '@remix-run/cloudflare': 2.10.3(@cloudflare/workers-types@4.20240722.0)(typescript@5.5.3)
       '@remix-run/node': 2.10.3(typescript@5.5.3)
       '@remix-run/react': 2.10.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3)
       '@remix-run/router': 1.18.0
