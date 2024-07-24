@@ -1,10 +1,10 @@
-import { LoaderFunction, ActionFunction, json } from "@remix-run/cloudflare";
+import { LoaderFunction, ActionFunction, json } from "@vercel/remix";
 
 import {
     unstable_composeUploadHandlers,
     unstable_createMemoryUploadHandler,
     unstable_parseMultipartFormData,
-} from "@remix-run/cloudflare"; 
+} from "@vercel/remix"; 
 
 import * as Client from '@web3-storage/w3up-client'
 import { StoreMemory } from '@web3-storage/w3up-client/stores/memory'

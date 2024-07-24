@@ -1,4 +1,4 @@
-import type { MetaFunction } from "@remix-run/cloudflare";
+import type { MetaFunction } from "@vercel/remix";
 import { GiftEditor } from "~/components/GiftEditor/index";
 
 export default function Index() {  

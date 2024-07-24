@@ -5,6 +5,7 @@ node_modules
 .env
 
 .wrangler
+.vercel
 
 /public/build
 /app/components/*.js

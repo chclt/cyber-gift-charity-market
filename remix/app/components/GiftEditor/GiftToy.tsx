@@ -1,11 +1,7 @@
 import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input";
 
-
-import { toBlob } from "html-to-image";
-
-import "./GiftFlag.css";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 import { createGift } from "~/lib/common";
 import { useAccount, useWriteContract, useReadContract, useWaitForTransactionReceipt } from "wagmi";
@@ -14,14 +10,10 @@ import { wagmiConfig } from "~/config/wagmi-config";
 import { waitForTransactionReceipt } from "@wagmi/core"
 import { marketContractAbi, marketContractAddress } from "~/config/market-contract";
 import { paymentTokenContractAbi, paymentTokenContractAddress } from "~/config/payment-token-contract";
-import { Textarea } from "../ui/textarea";
 
 
-import { Canvas, useLoader } from '@react-three/fiber'
-
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { Model } from "../Model";
-import { ClientOnly } from "remix-utils/client-only";
+
 import { ReloadIcon } from "@radix-ui/react-icons";
 
 import QRCodeCanvas from 'qrcode.react';
