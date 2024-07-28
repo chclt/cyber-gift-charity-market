@@ -10,3 +10,5 @@ node_modules
 /public/build
 /app/components/*.js
 /app/components/**/*.d.ts
+
+.vercel

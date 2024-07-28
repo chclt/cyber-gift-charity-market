@@ -29,22 +29,35 @@ export const action = async ({
             );
             const file = formData.get("file");
 
+            console.log(file);
+            
+            
 
-            // Load client with specific private key
-            const principal = Signer.parse(process.env.WEB3STORAGE_KEY)
-            const store = new StoreMemory()
-            const client = await Client.create({ principal, store })
-            // Add proof that this agent has been delegated capabilities on the space
-            const proof = await Proof.parse(process.env.WEB3STORAGE_PROOF)
-            const space = await client.addSpace(proof)
-            await client.setCurrentSpace(space.did())
+            const uploadResponse = await fetch("https://api.pinata.cloud/pinning/pinFileToIPFS", {
+                method: "POST",
+                headers: {
+                    'Authorization': `Bearer ${process.env.PINATA_KEY}`
+                },
+                body:(() => {
+                    const formData = new FormData();
+                    formData.append('file', file);
+                    formData.append('pinataMetadata', JSON.stringify({
+                        name: file.name,
+                    }));
+                    formData.append('pinataOptions', JSON.stringify({
+                        cidVersion: 0,
+                    }));
+                    return formData;
+                })()
+            })
 
-            //   const client = await create()
-            const cid = await client.uploadFile(file)
+            const uploadResult = await uploadResponse.json();
 
+            const cid = uploadResult.IpfsHash
+            
             return json({
                 data: {
-                    cid: `https://${cid}.ipfs.w3s.link`
+                    cid: `${process.env.PINATA_GATEWAY}/ipfs/${cid}`
                 },
                 success: true
             }, 200)
