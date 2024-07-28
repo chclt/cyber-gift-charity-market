@@ -36,16 +36,14 @@ contract GiftNFT is ERC721URIStorage, ERC721Enumerable {
 
     function tokenURI(
         uint256 tokenId
-    )
-        public
-        view
-        override(ERC721, ERC721URIStorage)
-        returns (string memory)
-    {
+    ) public view override(ERC721, ERC721URIStorage) returns (string memory) {
         return super.tokenURI(tokenId);
     }
 
-    function mint(address to, string memory tokenURIString) public returns (uint256) {
+    function mint(
+        address to,
+        string memory tokenURIString
+    ) public returns (uint256) {
         uint256 newTokenId = _tokenIdCounter.current();
         _safeMint(to, newTokenId);
         _setTokenURI(newTokenId, tokenURIString);

@@ -10,7 +10,7 @@ interface NFTListProps {
     onRemove?: (item: INFTItem) => void;
 }
 
-const NFTList: React.FC<NFTListProps> = ({ nftItems, onBuy = () => {}, onRemove = () => {} }: NFTListProps) => {
+const NFTList: React.FC<NFTListProps> = ({ nftItems, onBuy = () => { }, onRemove = () => { } }: NFTListProps) => {
     return (
         <List>
             {!!nftItems.length && nftItems.map((item: INFTItem, index: number) =>

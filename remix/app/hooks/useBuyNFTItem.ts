@@ -26,9 +26,9 @@ export function useBuyNFTItem(): {
             abi: paymentTokenContractAbi,
             functionName: "approve",
             args: [marketContractAddress, item.price],
-          })
+        })
         await waitForTransactionReceipt(wagmiConfig, { hash: approvePaymentTx });
-        
+
         writeContractBuy({
             abi: marketContractAbi,
             address: marketContractAddress,

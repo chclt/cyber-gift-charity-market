@@ -29,7 +29,7 @@
 
 ## 技术选型
 - 前端工具链：React, Vite, pnpm, styled-component
-- 服务端：Remix (调用 web3.storage 上传图片至 ipfs) 
+- 服务端：Remix (使用 pinata ipfs 服务) 
 - 合约: Solidity
 - BlockChain: Optimism-Sepolia
 

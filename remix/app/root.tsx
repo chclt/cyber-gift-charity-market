@@ -28,8 +28,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <QueryClientProvider client={queryClient}>
             <RainbowKitProvider>
               <div className="bg-background">
-                <div className="max-w-screen-lg mx-auto px-16 grid grid-cols-5">
-                  <Sidebar className="col-span-2" />
+                <div className="mx-auto px-16 grid grid-cols-5">
+                  <Sidebar/>
                   <div className="col-span-3">
                     {children}
                   </div>

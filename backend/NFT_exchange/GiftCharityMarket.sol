@@ -191,7 +191,9 @@ contract GiftCharityMarket is ReentrancyGuard {
         return _nftItems;
     }
 
-    function getNFTAwardedByUser(address _user) public view returns (AwardedNFT[] memory) {
+    function getNFTAwardedByUser(
+        address _user
+    ) public view returns (AwardedNFT[] memory) {
         return nftAwardedMap[_user];
     }
 }

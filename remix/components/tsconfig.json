@@ -1,13 +1,14 @@
 {
-    "extends": "../tsconfig.json",
-    "include": ["**/*.ts", "**/*.tsx"],
-    "compilerOptions": {
-      "outDir": "../app/components",
-  
-      // Babel generates the JS files but we still need to emit .d.ts files
-      "declaration": true,
-      "noEmit": false,
-      "emitDeclarationOnly": true
-    }
+  "extends": "../tsconfig.json",
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "compilerOptions": {
+    "outDir": "../app/components",
+    // Babel generates the JS files but we still need to emit .d.ts files
+    "declaration": true,
+    "noEmit": false,
+    "emitDeclarationOnly": true
   }
-  
+}

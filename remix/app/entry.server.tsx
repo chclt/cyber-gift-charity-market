@@ -1,6 +1,6 @@
 import { RemixServer } from '@remix-run/react';
 import { handleRequest, type EntryContext } from '@vercel/remix';
- 
+
 export default async function (
   request: Request,
   responseStatusCode: number,

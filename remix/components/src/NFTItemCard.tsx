@@ -72,16 +72,16 @@ const NFTItemCard: React.FC<NFTItemCardProps> = ({ item, priceDecimal, onBuy, on
                 </InfoItem>
             </InfoLine>
             <InfoLine>
-                { !!item.seller &&
-                <InfoItem>
-                    <span>{item.isActive ? 'Seller' : 'Owner'}</span>
-                    <span title={item.seller}>{formatAddress(owner)}</span>
-                </InfoItem> }
-                { !item.seller &&
-                <InfoItem>
-                    <span>sender</span>
-                    <span title={item.sender}>{formatAddress(item.sender!)}</span>
-                </InfoItem> }
+                {!!item.seller &&
+                    <InfoItem>
+                        <span>{item.isActive ? 'Seller' : 'Owner'}</span>
+                        <span title={item.seller}>{formatAddress(owner)}</span>
+                    </InfoItem>}
+                {!item.seller &&
+                    <InfoItem>
+                        <span>sender</span>
+                        <span title={item.sender}>{formatAddress(item.sender!)}</span>
+                    </InfoItem>}
                 <InfoItem>
                     <span>Add Time</span>
                     <span>{new Date(Number(item.addTime) * 1000).toLocaleDateString()}</span>
@@ -96,7 +96,7 @@ const NFTItemCard: React.FC<NFTItemCardProps> = ({ item, priceDecimal, onBuy, on
                     <ActionBtn $color={'red'} onClick={() => { onBuy(item) }
                     }>购买🉐</ActionBtn>)}
 
-                { !!item.price && <span style={{ display: 'flex' }}>Price💲<Price>{formatUnits(item.price, priceDecimal)}</Price></span> }
+                {!!item.price && <span style={{ display: 'flex' }}>Price💲<Price>{formatUnits(item.price, priceDecimal)}</Price></span>}
             </InfoLine>
         </NFTCard >
     );

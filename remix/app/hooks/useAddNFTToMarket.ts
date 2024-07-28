@@ -28,7 +28,7 @@ export function useAddNFTToMarket(): {
             abi: nftAbi,
             functionName: "setApprovalForAll",
             args: [marketContractAddress, true],
-          })
+        })
         await waitForTransactionReceipt(wagmiConfig, { hash: approveNFTTx });
 
         contractAddNFT({

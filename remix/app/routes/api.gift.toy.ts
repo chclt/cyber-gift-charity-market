@@ -1,16 +1,7 @@
 import { LoaderFunction, ActionFunction, json } from "@vercel/remix";
 
-
-import * as Client from '@web3-storage/w3up-client'
-import { StoreMemory } from '@web3-storage/w3up-client/stores/memory'
-import * as Proof from '@web3-storage/w3up-client/proof'
-import { Signer } from '@web3-storage/w3up-client/principal/ed25519'
-
 export const loader: LoaderFunction = async ({ context, request, params }) => {
-
-
     const taskId = new URL(request.url).searchParams.get("task_id");
-
 
     const result = await fetch(`https://api.tripo3d.ai/v2/openapi/task/${taskId}`, {
         method: "GET",
@@ -26,17 +17,14 @@ export const loader: LoaderFunction = async ({ context, request, params }) => {
         data: jsonRes.data,
         success: true
     }, 200)
-    
 };
 
 export const action = async ({
     context, request, params
 }: ActionFunction) => {
 
-    switch (request.method) { 
+    switch (request.method) {
         case "POST": {
-
-            
             const bodyJson = await request.json();
             const { prompt } = bodyJson;
 
@@ -58,7 +46,6 @@ export const action = async ({
                 data: jsonRes.data,
                 success: true
             }, 200)
-
         }
     }
 };

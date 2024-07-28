@@ -8,7 +8,7 @@ import { formatUnits } from "viem";
 import { paymentTokenDecimal } from "~/config/payment-token-contract";
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
-  
+
 }
 
 export function Sidebar({ className }: SidebarProps) {
@@ -28,7 +28,7 @@ export function Sidebar({ className }: SidebarProps) {
             }} >
               <Button variant={location.pathname == "/" ? "secondary" : "ghost"} className="w-full justify-start">
                 <span className="mr-2 text-lg">🚩</span>
-                 送礼物
+                送礼物
               </Button>
             </Link>
 
@@ -37,7 +37,7 @@ export function Sidebar({ className }: SidebarProps) {
             }} >
               <Button variant={location.pathname == "/market" ? "secondary" : "ghost"} className="w-full justify-start">
                 <span className="mr-2 text-lg">🛒</span>
-                 市场
+                市场
               </Button>
             </Link>
 
@@ -46,7 +46,7 @@ export function Sidebar({ className }: SidebarProps) {
             }} >
               <Button variant={location.pathname == "my" ? "secondary" : "ghost"} className="w-full justify-start">
                 <span className="mr-2 text-lg">🎁</span>
-                 我收到的
+                我收到的
               </Button>
             </Link>
           </div>

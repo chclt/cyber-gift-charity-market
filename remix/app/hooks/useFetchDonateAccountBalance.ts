@@ -31,12 +31,12 @@ export function useFetchDonateAccountBalance(): {
         ]
     });
     useEffect(() => {
-        if(marketData) {            
+        if (marketData) {
             setPaymentToken(marketData[0].result);
             setPublicDonateAccount(marketData[1].result);
         }
     }, [marketData])
-    
+
     const { data: balanceData, refetch: refetchBalance, isFetching: isBalanceFetching } = useReadContract(
         {
             abi: paymentTokenContractAbi,
@@ -46,7 +46,7 @@ export function useFetchDonateAccountBalance(): {
         }
     );
     useEffect(() => {
-        if(balanceData) {
+        if (balanceData) {
             setBalance(balanceData as bigint);
         }
     }, [balanceData])

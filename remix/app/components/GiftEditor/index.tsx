@@ -1,7 +1,4 @@
-
-import { forwardRef, MutableRefObject, useImperativeHandle, useRef } from "react";
 import { GiftFlag } from "./GiftFlag";
-
 import {
     Tabs,
     TabsContent,
@@ -10,9 +7,7 @@ import {
 } from "~/components/ui/tabs"
 import { GiftToy } from "./GiftToy";
 
-
-export function GiftEditor () {
-
+export function GiftEditor() {
     return (
         <Tabs defaultValue="flag" className="w-[400px]">
             <TabsList className="grid w-full grid-cols-2">
